@@ -95,10 +95,23 @@
 
     <div id="result"></div>
 
-    <div class="note">
-      判斷依據：第二/三次領藥之「藥吃完日」是否落在<br>
-      <strong>2026/02/14 ～ 2026/02/22</strong>
-    </div>
+    <details class="note" style="margin-top:16px;">
+      <summary style="cursor:pointer; font-weight:600;">計算依據說明（點擊展開）</summary>
+      <div style="margin-top:8px; line-height:1.6;">
+        <strong>適用期間：</strong>2026 年春節（2026/02/14 ～ 02/22）<br><br>
+        <strong>判斷原則：</strong><br>
+        以同一張慢性病連續處方簽中，<strong>各次領藥之「藥吃完日」</strong>為判斷依據。<br>
+        只要<strong>任一次</strong>藥品吃完日落在春節期間，
+        即認定為符合提前領藥條件。<br><br>
+        <strong>計算方式：</strong><br>
+        第 i 次領藥開始日 ＝ 就醫（開立）日期 ＋（每次給藥天數 ×（i − 1））<br>
+        第 i 次藥吃完日 ＝ 第 i 次領藥開始日 ＋（每次給藥天數 − 1）<br><br>
+        <strong>符合條件：</strong><br>
+        2026/02/14 ≤ 任一次藥吃完日 ≤ 2026/02/22<br><br>
+        <strong>提前領藥期間：</strong><br>
+        2026/01/31 ～ 2026/02/13
+      </div>
+    </details>
   </div>
 
   <script>
