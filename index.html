@@ -136,32 +136,36 @@
       }
 
       const visitDate = new Date(visitDateInput);
-
-      // 最後一次領藥開始日
-      const lastFillStart = addDays(visitDate, days * (times - 1));
-      // 最後一次藥吃完日
-      const lastFillEnd = addDays(lastFillStart, days - 1);
-
       const springStart = new Date('2026-02-14');
       const springEnd = new Date('2026-02-22');
 
-      const eligible = lastFillEnd >= springStart && lastFillEnd <= springEnd;
+      let matched = [];
 
-      if (eligible) {
+      for (let i = 1; i <= times; i++) {
+        const fillStart = addDays(visitDate, days * (i - 1));
+        const fillEnd = addDays(fillStart, days - 1);
+
+        if (fillEnd >= springStart && fillEnd <= springEnd) {
+          matched.push({ index: i, start: fillStart, end: fillEnd });
+        }
+      }
+
+      if (matched.length > 0) {
+        let detail = matched.map(m => `第 ${m.index} 次領藥：${format(m.start)} ～ ${format(m.end)}`).join('<br>');
         resultDiv.innerHTML = `
           <div class="result ok">
             <strong>符合提前領藥資格</strong><br><br>
-            最後一次領藥開始日：${format(lastFillStart)}<br>
-            藥吃完日：${format(lastFillEnd)}<br><br>
+            ${detail}<br><br>
             可於 <strong>2026/01/31 ～ 2026/02/13</strong> 提前領藥。
           </div>`;
       } else {
+        const lastFillStart = addDays(visitDate, days * (times - 1));
+        const lastFillEnd = addDays(lastFillStart, days - 1);
         resultDiv.innerHTML = `
           <div class="result no">
             <strong>不符合提前領藥資格</strong><br><br>
-            最後一次領藥開始日：${format(lastFillStart)}<br>
-            藥吃完日：${format(lastFillEnd)}<br><br>
-            未落在春節期間（2026/02/14～02/22）。
+            最後一次領藥：${format(lastFillStart)} ～ ${format(lastFillEnd)}<br>
+            未有任何一次藥品吃完日落在春節期間（2026/02/14～02/22）。
           </div>`;
       }
     }
